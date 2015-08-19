@@ -4,11 +4,11 @@ import re
 import nltk
 from nltk.corpus import stopwords
 
-#nltk.download()
-
 
 class W2vSearch:
     def __init__(self, data):
+        ''' data provides training data as string or as list of strings
+        '''
         links = data
         if type(data) is str:
             links = [data]
@@ -30,6 +30,7 @@ class W2vSearch:
         return sents
 
     def similarity(self, word1, word2):
+        ''' similarity returns similarity between two words '''
         return self.model.similarity(word1, word2)
 
     def search(self, word, negative=[]):
