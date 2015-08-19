@@ -33,8 +33,23 @@ class W2vSearch:
         ''' similarity returns similarity between two words '''
         return self.model.similarity(word1, word2)
 
-    def search(self, word, negative=[]):
-        return self.model.most_similar(positive=[word], negative=negative)
+    def search(self, word, negative=[], drop=0):
+        ''' Args:
+              word - target word, for finding similar words
+              negative - list of negative fords, for better finding similarities
+              drop - times of dropping most non-similar words(ie, move this word to negative)
+        '''
+        neg = negative
+        if drop == 0:
+            return self._searchSimilarity(word, negative)
+        for i in range(drop):
+            result = self._searchSimilarity(word, negative)
+            neg.append(result[-1][0])
+        return result
+
+
+    def _searchSimilarity(self, word, negative):
+        return self.model.most_similar(positive=[word], negative=negative) 
 
     def save(self, outfile):
         ''' This method provides saving of this model
