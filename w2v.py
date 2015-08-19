@@ -36,6 +36,11 @@ class W2vSearch:
     def search(self, word, negative=[]):
         return self.model.most_similar(positive=[word], negative=negative)
 
+    def save(self, outfile):
+        ''' This method provides saving of this model
+        '''
+        self.model.save(outfile)
+
 
 def preprocessing(str):
     sents = [word_tokenize(" ".join(re.findall(r'\w+',t, flags=re.UNICODE | re.LOCALE)).lower())
